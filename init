@@ -17,6 +17,12 @@ chown www-data:www-data $APPDIR/storage
 
 
 _start() {
+    if [ ! -f /etc/thumbor.conf.original ]; then
+        cp /etc/thumbor.conf /etc/thumbor.conf.original
+    else
+        cp /etc/thumbor.conf.original /etc/thumbor.conf
+    fi
+    
     if [ -f /etc/persistent-conf/thumbor.conf ]; then
         cat /etc/persistent-conf/thumbor.conf >> /etc/thumbor.conf
     fi
