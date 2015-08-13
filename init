@@ -21,6 +21,10 @@ _start() {
         cat /etc/persistent-conf/thumbor.conf >> /etc/thumbor.conf
     fi
 
+    if [ -n "$SECURITY_KEY" ]; then
+        echo -e "\nSECURITY_KEY=\"$SECURITY_KEY\"\nALLOW_UNSAFE_URL=False\n" >> /etc/thumbor.conf
+    fi
+
     echo "Starting thumbor..."
 
     sudo -u www-data -H \
