@@ -17,10 +17,6 @@ chown www-data:www-data $APPDIR/storage
 
 
 _start() {
-    if [ -S /dev/log ]; then
-        cat /setup/config/thumbor-syslog.conf >> /etc/thumbor.conf
-    fi
-
     if [ -f /etc/persistent-conf/thumbor.conf ]; then
         cat /etc/persistent-conf/thumbor.conf >> /etc/thumbor.conf
     fi

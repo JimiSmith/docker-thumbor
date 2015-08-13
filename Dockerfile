@@ -1,16 +1,16 @@
 FROM ubuntu:14.04
-MAINTAINER elprans@sprymix.com
+MAINTAINER smithj002@gmail.com
 
 ENV APPDIR /srv/thumbor
-ENV THUMBOR_VERSION 4.2.0
-ENV THUMBOR_ENGINE graphicsmagick
-ENV GRAPHICSMAGICK_ENGINE_VERSION 0.1.1
+ENV THUMBOR_VERSION 5.0.6
+ENV THUMBOR_ENGINE opencv
+ENV OPENCV_ENGINE_VERSION 1.0.1
+ENV MAX_CONCURRENCY 1
 
 EXPOSE 8888
 
 VOLUME ["/etc/persistent-conf"]
 VOLUME ["/srv/thumbor/storage"]
-VOLUME ["/dev/log"]
 
 ENTRYPOINT ["/init"]
 CMD ["start"]

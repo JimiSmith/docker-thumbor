@@ -7,6 +7,8 @@ set -e
 _install() {
     local pkg=$1 ver=$2 afterhook=$3
 
+    echo "installing $pkg $ver"
+
     cd /tmp
 
     # Download the snapshot
@@ -15,16 +17,10 @@ _install() {
 
     cd "$pkg-${ver}"
 
-    if [ -e /setup/patches/"${pkg}" ]; then
-        for p in /setup/patches/"${pkg}"/*.patch; do
-            patch -p1 < "${p}"
-        done
-    fi
-
     if [ -e "requirements" ]; then
         apt-get install \
-            --no-install-recommends --ignore-missing --fix-broken -y \
-                $(cat requirements | grep -v "^\(libpngwriter\|libfaac\|libtiffxx0c2\|libavcodec53\|libavformat53\|gstreamer0.10-ffmpeg\|libtiff4\|redis-server\)")
+            --ignore-missing --fix-broken -y \
+                $(cat requirements)
     fi
 
     python setup.py install
@@ -47,6 +43,8 @@ if [ "${THUMBOR_ENGINE}" = "opencv" ]; then
     _install opencv-engine $OPENCV_ENGINE_VERSION
 elif [ "${THUMBOR_ENGINE}" = "graphicsmagick" ]; then
     _install graphicsmagick-engine $GRAPHICSMAGICK_ENGINE_VERSION
+elif [ "${THUMBOR_ENGINE}" = "pil" ]; then
+    echo "PIL is built in"
 else
     echo "ERROR: Unsupported thumbor engine: ${THUMBOR_ENGINE}" >&2
     exit 1
